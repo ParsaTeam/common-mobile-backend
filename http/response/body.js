@@ -39,24 +39,18 @@ const bodyResponse = {
     return bodyResponseError(401, messageUnauthorized, requestId, mobileBackendId);
   },
 
-  // 404
-  notFound(resource, requestId, mobileBackendId) {
-    return bodyResponseError(404, `The resource ${resource} not found.`, requestId, mobileBackendId);
-  },
-
   // 403
   forbidden(message, requestId, mobileBackendId) {
     return bodyResponseError(403, message, requestId, mobileBackendId);
   },
 
   // 404
-  invalidMethod(message, requestId, mobileBackendId) {
-    return bodyResponseError(404, message, requestId, mobileBackendId);
+  notFound(resource, requestId, mobileBackendId) {
+    return bodyResponseError(404, `The resource ${resource} not found.`, requestId, mobileBackendId);
   },
 
   // 500
   internalServerError(err, requestId) {
-    console.log(err.stack);
     return bodyResponseError(500, err.message, requestId);
   }
 };

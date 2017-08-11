@@ -57,3 +57,8 @@ typings/
 # dotenv environment variables file
 .env
 
+# debug
+.debug
+
+# Visual Studio Code
+.vscode

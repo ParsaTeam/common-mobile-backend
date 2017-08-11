@@ -5,7 +5,8 @@ const {
 } = require('../../response');
 
 const {
-  AppsModel
+  AppsModel,
+  CustomError
 } = require('../../../models/');
 
 const apiKey = {
@@ -24,14 +25,16 @@ const apiKey = {
             req.app = result.toObject();
             next();
           } else {
-            errorResponse.send(res, 403, bodyResponse.forbidden('Invalid x-api-key', req.id, 'invalid-api-key'));
+            const forbiddenError = new CustomError('Invalid x-api-key', 403);
+            errorResponse.send(res, forbiddenError, req.Id);
           }
         })
         .catch(err => {
-          errorResponse.send(res, 500, bodyResponse.internalServerError(err, req.id));
+          errorResponse.send(res, err, req.id);
         });
     } else {
-      errorResponse.send(res, 403, bodyResponse.forbidden('Required x-api-key', req.id, 'required-api-key'));
+      const forbiddenError = new CustomError('Required x-api-key', 403);
+      errorResponse.send(res, forbiddenError, req.Id);
     }
   }
 };

@@ -1,6 +1,6 @@
 'use strict';
 module.exports = class CustomError extends Error {
-  constructor(message, status) {
+  constructor(message, status, orinalStack) {
     // Calling parent constructor of base Error class.
     super(message);
 
@@ -14,5 +14,7 @@ module.exports = class CustomError extends Error {
     // I'm going to use preferred HTTP status for this error types.
     // `500` is the default value if not specified.
     this.status = status || 500;
+
+    this.orinalStack = orinalStack || this.stack;
   }
 }

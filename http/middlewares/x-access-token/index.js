@@ -5,7 +5,8 @@ const {
 } = require('../../response');
 
 const {
-  AuthTokensModel
+  AuthTokensModel,
+  CustomError
 } = require('../../../models');
 
 const accessToken = {
@@ -21,14 +22,16 @@ const accessToken = {
             req.accessToken = result.toObject();
             next();
           } else {
-            errorResponse.send(res, 403, bodyResponse.forbidden('Invalid x-access-token', req.id, 'invalid-access-token'));
+            const forbiddenError = new CustomError('Invalid x-access-token', 403);
+            errorResponse.send(res, forbiddenError, req.Id);
           }
         })
         .catch(err => {
-          errorResponse.send(res, 500, bodyResponse.internalServerError(err, req.id));
+          errorResponse.send(res, err, req.id);
         });
     } else {
-      errorResponse.send(res, 403, bodyResponse.forbidden('Required x-access-token', req.id, 'required-access-token'));
+      const forbiddenError = new CustomError('Required x-access-token', 403);
+      errorResponse.send(res, forbiddenError, req.Id);
     }
   }
 };
