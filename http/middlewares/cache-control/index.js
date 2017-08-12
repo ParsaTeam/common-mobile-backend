@@ -1,6 +1,10 @@
 'use strict';
+//
+// const default values
 const CACHE_TIME_IN_MINUTES = 60;
 
+//
+// methods to expose
 const cacheControl = {
   cache(cacheTimeInMinutes) {
     return (req, res, next) => {
@@ -18,4 +22,6 @@ const cacheControl = {
   }
 };
 
+//
+// exposed methods
 module.exports = cacheControl;

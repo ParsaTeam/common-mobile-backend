@@ -1,14 +1,11 @@
 'use strict';
-const {
-  bodyResponse,
-  errorResponse
-} = require('../../response');
+//
+// require internal modules
+const { bodyResponse, errorResponse } = require('../../response');
+const { AppsModel, CustomError } = require('../../../models/');
 
-const {
-  AppsModel,
-  CustomError
-} = require('../../../models/');
-
+//
+// methods to expose
 const apiKey = {
   has(req, res, next) {
     let apiKey = req.header('x-api-key');
@@ -39,4 +36,6 @@ const apiKey = {
   }
 };
 
+//
+// exposed methods
 module.exports = apiKey;

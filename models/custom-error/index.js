@@ -1,5 +1,7 @@
 'use strict';
-module.exports = class CustomError extends Error {
+//
+// class to model "custom error" of mobile backend
+class CustomError extends Error {
   constructor(message, status, category, orinalStack) {
     // Calling parent constructor of base Error class.
     super(message);
@@ -20,3 +22,7 @@ module.exports = class CustomError extends Error {
     this.orinalStack = orinalStack || this.stack;
   }
 }
+
+//
+// model to export
+module.exports = CustomError;

@@ -1,14 +1,11 @@
 'use strict';
-const {
-  bodyResponse,
-  errorResponse
-} = require('../../response');
+//
+// require internal modules
+const { bodyResponse, errorResponse } = require('../../response');
+const { AuthTokensModel, CustomError } = require('../../../models');
 
-const {
-  AuthTokensModel,
-  CustomError
-} = require('../../../models');
-
+//
+// methods to expose
 const accessToken = {
   has(req, res, next) {
     let accessToken = req.header('x-access-token');
@@ -36,4 +33,6 @@ const accessToken = {
   }
 };
 
+//
+// exposed methods
 module.exports = accessToken;

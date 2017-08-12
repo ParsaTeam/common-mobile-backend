@@ -1,4 +1,6 @@
 'use strict';
+//
+// requiere modules internals
 const bodyResponse = require('./response/body'),
   errorResponse = require('./response/error'),
   cacheControl = require('./middlewares/cache-control'),
@@ -6,6 +8,8 @@ const bodyResponse = require('./response/body'),
   apiKey = require('./middlewares/x-api-key'),
   server = require('./server');
 
+//
+// grouped modules to exposed
 module.exports = {
   bodyResponse,
   errorResponse,

@@ -1,7 +1,11 @@
 'use strict';
+//
+// requiere modules externals
 const mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
+//
+// auth tokens schema model
 const AuthTokensSchema = new Schema({
   accessToken: {
     type: String,
@@ -22,4 +26,6 @@ const AuthTokensSchema = new Schema({
   versionKey: false
 });
 
+//
+// model to export
 module.exports = mongoose.model('auth_tokens', AuthTokensSchema);

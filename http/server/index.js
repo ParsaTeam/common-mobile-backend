@@ -41,4 +41,6 @@ http.createServer(server).listen(server.get('port'), '0.0.0.0', function () {
   console.log('Express server listening on port ' + server.get('port'));
 });
 
+//
+// exposed server
 module.exports = server;

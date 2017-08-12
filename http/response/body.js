@@ -55,4 +55,6 @@ const bodyResponse = {
   }
 };
 
+//
+// exposed methods
 module.exports = bodyResponse;

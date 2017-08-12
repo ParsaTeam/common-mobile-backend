@@ -1,11 +1,17 @@
 'use strict';
+//
+// requiere modules externals
 const mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   encrypt = require('mongoose-encryption');
 
+//
+// environments
 const encryptionKey = process.env.MONGODB_ENCRYPTION_KEY, // SOME 32 BYTE BASE64 STRING
   signingKey = process.env.MONGODB_SIGNING_KEY; // SOME 64 BYTE BASE64 STRING
 
+//
+// user schema model
 const UsersSchema = new Schema({
   documentId: {
     type: String,
@@ -34,4 +40,6 @@ UsersSchema.plugin(encrypt, {
   signingKey
 });
 
+//
+// model to export
 module.exports = mongoose.model('users', UsersSchema);

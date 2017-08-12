@@ -47,4 +47,6 @@ const errorResponse = {
   }
 };
 
+//
+// exposed methods
 module.exports = errorResponse;

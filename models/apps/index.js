@@ -1,7 +1,11 @@
 'use strict';
+//
+// requiere modules externals
 const mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
+//
+// app schema model
 const AppsSchema = new Schema({
   key: { type: String, unique: true, required: true, index: true },
   name: String,
@@ -11,4 +15,6 @@ const AppsSchema = new Schema({
   settings: Object
 }, { versionKey: false, upsert: true });
 
+//
+// model to export
 module.exports = mongoose.model('apps', AppsSchema);
