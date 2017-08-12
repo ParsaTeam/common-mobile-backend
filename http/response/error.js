@@ -7,7 +7,7 @@ const body = require('./body');
 //
 // exposed methods
 const errorResponse = {
-  send(res, err, requestId) {
+  sendAndLog(res, err, requestId) {
     // TODO - log in cloudwatch
     console.log('Message error:', err.message);
     console.log('Message stack:', err.stack);
@@ -39,6 +39,11 @@ const errorResponse = {
     } else {
       res.json(500, body.internalServerError(err));
     }
+  },
+
+  send(res, status, bodyResponse) {
+    res.header('Cache-Control', 'private, max-age=0, no-cache, no-store, must-revalidate');
+    res.json(status, bodyResponse);
   }
 };
 

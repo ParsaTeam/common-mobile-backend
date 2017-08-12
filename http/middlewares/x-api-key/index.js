@@ -26,15 +26,15 @@ const apiKey = {
             next();
           } else {
             const forbiddenError = new CustomError('Invalid x-api-key', 403);
-            errorResponse.send(res, forbiddenError, req.Id);
+            errorResponse.sendAndLog(res, forbiddenError, req.Id);
           }
         })
         .catch(err => {
-          errorResponse.send(res, err, req.id);
+          errorResponse.sendAndLog(res, err, req.id);
         });
     } else {
       const forbiddenError = new CustomError('Required x-api-key', 403);
-      errorResponse.send(res, forbiddenError, req.Id);
+      errorResponse.sendAndLog(res, forbiddenError, req.Id);
     }
   }
 };
