@@ -50,7 +50,7 @@ const log = {
   },
   warnCustonError(err, requestId) {
     const messageToLog = {
-      coreModule: err.coreModule,
+      category: err.category,
       status: err.status,
       message: err.message,
       stack: err.orinalStack,
@@ -62,7 +62,7 @@ const log = {
   },
   errorCustonError(err, requestId) {
     const messageToLog = {
-      coreModule: err.coreModule,
+      category: err.category,
       status: err.status,
       message: err.message,
       stack: err.orinalStack,

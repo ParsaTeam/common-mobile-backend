@@ -4,7 +4,7 @@ const { categories } = require('../../logger');
 //
 // class to model "custom error" of mobile backend
 class CustomError extends Error {
-  constructor(message, status, coreModule, orinalStack) {
+  constructor(message, status, category, orinalStack) {
     // Calling parent constructor of base Error class.
     super(message);
 
@@ -19,7 +19,7 @@ class CustomError extends Error {
     // `500` is the default value if not specified.
     this.status = status || 500;
 
-    this.coreModule = coreModule || 'internal-error';
+    this.category = category || 'internal-error';
 
     this.orinalStack = orinalStack || this.stack;
   }
