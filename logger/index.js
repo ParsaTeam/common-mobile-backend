@@ -57,7 +57,7 @@ const log = {
       requestId
     };
 
-    const message = `${err.coreModule} - ${err.message}`
+    const message = `${err.category} - ${err.message}`
     winston.loggers.get(LOG_ID).warn(message, messageToLog);
   },
   errorCustonError(err, requestId) {
@@ -69,7 +69,7 @@ const log = {
       requestId
     };
 
-    const message = `${err.coreModule} - ${err.message}`
+    const message = `${err.category} - ${err.message}`
     winston.loggers.get(LOG_ID).error(message, messageToLog);
   }
 }
