@@ -19,7 +19,7 @@ const accessToken = {
             req.accessToken = result.toObject();
             next();
           } else {
-            const forbiddenError = new CustomError('Invalid x-access-token', 403);
+            const forbiddenError = new CustomError('Invalid x-access-token', 403, 'forbidden');
             errorResponse.sendAndLog(res, forbiddenError, req.Id);
           }
         })
@@ -27,7 +27,7 @@ const accessToken = {
           errorResponse.sendAndLog(res, err, req.id);
         });
     } else {
-      const forbiddenError = new CustomError('Required x-access-token', 403);
+      const forbiddenError = new CustomError('Required x-access-token', 403, 'forbidden');
       errorResponse.sendAndLog(res, forbiddenError, req.Id);
     }
   }
