@@ -2,71 +2,80 @@
 //
 // requiere modules externals
 const winston = require('winston'),
+  crypto = require('crypto'),
   WinstonCloudWatch = require('winston-cloudwatch');
 
 //
-// transports default
-winston.transports.CloudWatchServerInternalError = WinstonCloudWatch;
-winston.loggers.add('CloudWatchServerInternalError', {
-  CloudWatchServerInternalError: {
-    logGroupName: `mobile-backend/${process.env.SERVICE_NAME}`,
-    logStreamName: 'internal-error-server',
-    awsAccessKeyId: process.env.AWS_ACCESS_KEY,
-    awsSecretKey: process.env.AWS_SECRET_KEY,
-    awsRegion: process.env.CLOUDWACTH_AWS_REGION,
-    awsOptions: {
-      logStreamName: process.env.CLOUDWACTH_AWS_REGION
-    }
-  }
+// Give ourselves a randomized (time-based) hash to append to our stream name
+// so multiple instances of the server running don't log to the same
+// date-separated stream.
+const startTime = new Date().toISOString();
+
+const LOG_ID = 'cloudwatch-api';
+winston.loggers.add(LOG_ID, {
+  transports: [
+    new WinstonCloudWatch({
+      logGroupName: `mobile-backend/${process.env.SERVICE_NAME}`,
+      logStreamName: function () {
+        // Spread log streams across dates as the server stays up
+        let date = new Date().toISOString().split('T')[0];
+        return date + '-' + crypto.createHash('md5')
+            .update(startTime)
+            .digest('hex');
+      },
+      awsAccessKeyId: process.env.AWS_ACCESS_KEY,
+      awsSecretKey: process.env.AWS_SECRET_KEY,
+      awsRegion: process.env.CLOUDWACTH_AWS_REGION,
+      awsOptions: {
+        logStreamName: process.env.CLOUDWACTH_AWS_REGION
+      }
+    })
+  ]
 });
 
 //
 // log methods to expose
 const log = {
   info(message, category) {
-    category = category || categories.unknown;
-    winston.loggers.get(category).info(message);
+    const messageToLog = `${category} - ${message}`;
+    winston.loggers.get(LOG_ID).info(messageToLog);
   },
   warn(message, category) {
-    category = category || categories.unknown;
-    winston.loggers.get(category).warn(message);
+    const messageToLog = `${category} - ${message}`;
+    winston.loggers.get(LOG_ID).warn(messageToLog);
   },
   error(message, category) {
-    category = category || categories.unknown;
-    winston.loggers.get(category).error(message);
+    const messageToLog = `${category} - ${message}`;
+    winston.loggers.get(LOG_ID).error(messageToLog);
   },
   warnCustonError(err, requestId) {
     const messageToLog = {
+      coreModule: err.coreModule,
+      status: err.status,
       message: err.message,
-      stack: err.stack,
+      stack: err.orinalStack,
       requestId
     };
-    winston.loggers.get(err.category).warn(messageToLog);
+
+    const message = `${err.coreModule} - ${err.message}`
+    winston.loggers.get(LOG_ID).warn(message, messageToLog);
   },
   errorCustonError(err, requestId) {
     const messageToLog = {
+      coreModule: err.coreModule,
       status: err.status,
       message: err.message,
-      stack: err.stack,
+      stack: err.orinalStack,
       requestId
     };
-    winston.loggers.get(err.category).error(JSON.stringify(messageToLog));
-  }
-}
 
-//
-// categories props to expose
-const categories = {
-  internalError: 'CloudWatchServerInternalError'
+    const message = `${err.coreModule} - ${err.message}`
+    winston.loggers.get(LOG_ID).error(message, messageToLog);
+  }
 }
 
 //
 // grouped modules to export
 module.exports = {
-  log,
-  categories,
-  extends: {
-    winston,
-    WinstonCloudWatch
-  }
+  log
 };
