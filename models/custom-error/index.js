@@ -1,4 +1,6 @@
 'use strict';
+const { categories } = require('../../logger');
+
 //
 // class to model "custom error" of mobile backend
 class CustomError extends Error {
@@ -17,7 +19,7 @@ class CustomError extends Error {
     // `500` is the default value if not specified.
     this.status = status || 500;
 
-    this.category = category;
+    this.category = category || categories.internalError;
 
     this.orinalStack = orinalStack || this.stack;
   }
