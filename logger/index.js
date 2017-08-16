@@ -44,9 +44,16 @@ const log = {
     const messageToLog = `${category} - ${message}`;
     winston.loggers.get(LOG_ID).warn(messageToLog);
   },
-  error(message, category) {
-    const messageToLog = `${category} - ${message}`;
-    winston.loggers.get(LOG_ID).error(messageToLog);
+  error(err, category, requestId) {
+    const messageToLog = {
+      category: category,
+      message: err.message,
+      stack: err.stack,
+      requestId
+    };
+
+    const message = `${err.category} - ${err.message}`
+    winston.loggers.get(LOG_ID).error(message, messageToLog);
   },
   warnCustonError(err, requestId) {
     const messageToLog = {
