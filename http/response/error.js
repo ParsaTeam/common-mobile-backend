@@ -34,6 +34,7 @@ const errorResponse = {
           res.json(500, body.internalServerError(err));
       }
     } else {
+      logger.log.error(err, 'unknown', requestId);
       res.json(500, body.internalServerError(err));
     }
   },
