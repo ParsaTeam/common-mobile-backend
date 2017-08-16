@@ -52,7 +52,7 @@ const log = {
       requestId
     };
 
-    const message = `${err.category} - ${err.message}`
+    const message = `${category} - ${err.message}`
     winston.loggers.get(LOG_ID).error(message, messageToLog);
   },
   warnCustonError(err, requestId) {
