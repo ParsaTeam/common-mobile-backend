@@ -23,7 +23,7 @@ const apiKey = {
             next();
           } else {
             const forbiddenError = new CustomError('Invalid x-api-key', 403, 'forbidden');
-            errorResponse.sendAndLog(res, forbiddenError, req.Id);
+            errorResponse.sendAndLog(res, forbiddenError, req.id);
           }
         })
         .catch(err => {
@@ -31,7 +31,7 @@ const apiKey = {
         });
     } else {
       const forbiddenError = new CustomError('Required x-api-key', 403, 'forbidden');
-      errorResponse.sendAndLog(res, forbiddenError, req.Id);
+      errorResponse.sendAndLog(res, forbiddenError, req.id);
     }
   }
 };
