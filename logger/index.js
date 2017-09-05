@@ -23,8 +23,8 @@ winston.loggers.add(LOG_ID, {
             .update(startTime)
             .digest('hex');
       },
-      awsAccessKeyId: process.env.AWS_ACCESS_KEY,
-      awsSecretKey: process.env.AWS_SECRET_KEY,
+      awsAccessKeyId: process.env.CLOUDWACTH_ACCESS,
+      awsSecretKey: process.env.CLOUDWACTH_SECRET,
       awsRegion: process.env.CLOUDWACTH_AWS_REGION,
       awsOptions: {
         logStreamName: process.env.CLOUDWACTH_AWS_REGION
