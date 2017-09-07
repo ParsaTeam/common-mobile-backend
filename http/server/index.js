@@ -28,19 +28,27 @@ server.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, x-access-token');
-  
-  if ('OPTIONS' == req.method) 
+
+  if ('OPTIONS' == req.method)
     res.send(200);
-  else 
+  else
     next();
 });
 
 // listener
-server.set('port', process.env.PORT || 3000);
-http.createServer(server).listen(server.get('port'), '0.0.0.0', function () {
-  console.log('Express server listening on port ' + server.get('port'));
-});
+
 
 //
 // exposed server
-module.exports = server;
+module.exports = {
+  createServerListen() {
+    server.set('port', process.env.PORT || 3000);
+    http.createServer(server).listen(server.get('port'), '0.0.0.0', function () {
+      console.log('Express server listening on port ' + server.get('port'));
+    });
+  },
+
+  getInstance() {
+    return server;
+  }
+};
