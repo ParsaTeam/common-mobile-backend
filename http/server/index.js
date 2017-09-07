@@ -36,10 +36,12 @@ server.use(function (req, res, next) {
 });
 
 // listener
-server.set('port', process.env.PORT || 3000);
-http.createServer(server).listen(server.get('port'), '0.0.0.0', function () {
-  console.log('Express server listening on port ' + server.get('port'));
-});
+server.initListenHttpServer = () => {
+  server.set('port', process.env.PORT || 3000);
+  http.createServer(server).listen(server.get('port'), '0.0.0.0', function () {
+    console.log('Express server listening on port ' + server.get('port'));
+  });
+};
 
 //
 // exposed server
