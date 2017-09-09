@@ -1,4 +1,5 @@
 'use strict';
+
 //
 // require internal modules
 const { CustomError } = require('../../models');
@@ -14,28 +15,32 @@ const errorResponse = {
       logger.log.errorCustonError(err, requestId);
       switch (err.status) {
         case 400:
-          res.json(err.status, body.badRequest(err.message, requestId));
+          res.status(400).json(body.badRequest(err.message, requestId));
           break;
 
         case 401:
-          res.json(err.status, body.unauthorized(err.message, requestId));
+          res.status(401).json(body.unauthorized(err.message, requestId));
           break;
 
         case 403:
-          res.json(err.status, body.forbidden(err.message, requestId));
+          res.status(403).json(body.forbidden(err.message, requestId));
           break;
 
         case 404:
-          res.json(err.status, body.notFound(err.message, requestId));
+          res.status(404).json(body.notFound(err.message, requestId));
+          break;
+
+        case 412:
+          res.status(412).json(body.preconditionFailed(err.message, requestId));
           break;
 
         case 500:
         default:
-          res.json(500, body.internalServerError(err));
+          res.status(500).json(body.internalServerError(err));
       }
     } else {
       logger.log.error(err, 'unknown', requestId);
-      res.json(500, body.internalServerError(err));
+      res.status(500).json(body.internalServerError(err));
     }
   },
 

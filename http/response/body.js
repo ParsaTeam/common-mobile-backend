@@ -49,6 +49,11 @@ const bodyResponse = {
     return bodyResponseError(404, `The resource ${resource} not found.`, requestId, mobileBackendId);
   },
 
+  // 412
+  preconditionFailed(message, requestId, mobileBackendId) {
+    return bodyResponseError(412, message, requestId, mobileBackendId);
+  },
+
   // 500
   internalServerError(err, requestId) {
     return bodyResponseError(500, err.message, requestId);
