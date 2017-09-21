@@ -10,14 +10,18 @@ const Promise = require('bluebird');
 let client;
 const _init = () => {
   client = redis.createClient({ host: process.env.REDIS_CACHE_HOST, port: process.env.REDIS_CACHE_PORT });
-  client.on('error', function (err) {
+  client.on('error', (err) => {
     console.log('redis =====>', err.message);
   });
-}
+};
 
 //
 // exposed
 const redisClient = {
+  init() {
+    _init();
+  },
+
   setObject(key, value, expireInSecunds) {
     if (client === undefined) {
       _init();
@@ -46,7 +50,28 @@ const redisClient = {
 
       return resolve(null);
     });
+  },
+
+  getObjects(keys) {
+    if (client === undefined) {
+      _init();
+    }
+
+    return new Promise((resolve) => {
+      if (client.connected) {
+        return client.mget(keys, (err, data) => {
+          if (err) {
+            return resolve(null);
+          }
+
+          const resultaData = data.map(item => JSON.parse(item));
+          return resolve(resultaData);
+        });
+      }
+
+      return resolve(null);
+    });
   }
-}
+};
 
 module.exports = redisClient;
