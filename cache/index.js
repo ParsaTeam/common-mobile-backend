@@ -56,12 +56,12 @@ const redisClient = {
     if (client === undefined) {
       _init();
     }
-
+    const resultEmptyData = keys.map(() => null);
     return new Promise((resolve) => {
       if (client.connected) {
         return client.mget(keys, (err, data) => {
           if (err) {
-            return resolve(null);
+            return resolve(resultEmptyData);
           }
 
           const resultaData = data.map(item => JSON.parse(item));
@@ -69,7 +69,7 @@ const redisClient = {
         });
       }
 
-      return resolve(null);
+      return resolve(resultEmptyData);
     });
   }
 };
