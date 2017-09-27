@@ -11,7 +11,10 @@ let client;
 const _init = () => {
   client = redis.createClient({ host: process.env.REDIS_CACHE_HOST, port: process.env.REDIS_CACHE_PORT });
   client.on('error', (err) => {
+    /* eslint-disable no-console */
+    // TODO: use logger
     console.log('redis =====>', err.message);
+    /* eslint-enable no-console */
   });
 };
 

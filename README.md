@@ -1,2 +1,1 @@
-# common-mobile-backend
-Common Mobile Backend
+# common-mobile-backend [![Build Status](https://travis-ci.com/user-mobile-clarobrasil/common-mobile-backend.svg?token=QWoSHFUd3r82PAUp4wtf&branch=master)](https://travis-ci.com/user-mobile-clarobrasil/common-mobile-backend)
