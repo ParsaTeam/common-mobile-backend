@@ -1,9 +1,10 @@
 'use strict';
+
 //
 // requiere modules externals
-const winston = require('winston'),
-  crypto = require('crypto'),
-  WinstonCloudWatch = require('winston-cloudwatch');
+const winston = require('winston');
+const crypto = require('crypto');
+const WinstonCloudWatch = require('winston-cloudwatch');
 
 //
 // Give ourselves a randomized (time-based) hash to append to our stream name
@@ -16,12 +17,13 @@ winston.loggers.add(LOG_ID, {
   transports: [
     new WinstonCloudWatch({
       logGroupName: `mobile-backend/${process.env.SERVICE_NAME}`,
-      logStreamName: function () {
+      logStreamName: () => {
         // Spread log streams across dates as the server stays up
-        let date = new Date().toISOString().split('T')[0];
-        return date + '-' + crypto.createHash('md5')
-            .update(startTime)
-            .digest('hex');
+        const date = new Date().toISOString().split('T')[0];
+        const cryptoMD5 = crypto.createHash('md5')
+          .update(startTime)
+          .digest('hex');
+        return `${date}-${cryptoMD5}`;
       },
       awsAccessKeyId: process.env.USER_CLOUDWACTH_ACCESS,
       awsSecretKey: process.env.USER_CLOUDWACTH_SECRET,
@@ -46,13 +48,13 @@ const log = {
   },
   error(err, category, requestId) {
     const messageToLog = {
-      category: category,
+      category,
       message: err.message,
       stack: err.stack,
       requestId
     };
 
-    const message = `${category} - ${err.message}`
+    const message = `${category} - ${err.message}`;
     winston.loggers.get(LOG_ID).error(message, messageToLog);
   },
   warnCustonError(err, requestId) {
@@ -64,7 +66,7 @@ const log = {
       requestId
     };
 
-    const message = `${err.category} - ${err.message}`
+    const message = `${err.category} - ${err.message}`;
     winston.loggers.get(LOG_ID).warn(message, messageToLog);
   },
   errorCustonError(err, requestId) {
@@ -76,10 +78,10 @@ const log = {
       requestId
     };
 
-    const message = `${err.category} - ${err.message}`
+    const message = `${err.category} - ${err.message}`;
     winston.loggers.get(LOG_ID).error(message, messageToLog);
   }
-}
+};
 
 //
 // grouped modules to export
