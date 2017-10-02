@@ -37,12 +37,14 @@ const log = {
     winston.info(message);
   },
   infoWithMetadata(message, metadata) {
+    metadata.level = 'info';
     winston.info(message, JSON.stringify(metadata));
   },
   warn(message) {
     winston.warn(message);
   },
   warnWithMetadata(message, metadata) {
+    metadata.level = 'warn';
     winston.warn(message, JSON.stringify(metadata));
   },
   error(err) {
@@ -51,6 +53,7 @@ const log = {
     winston.error(message, err);
   },
   errorWithMetadata(err, metadata) {
+    metadata.level = 'error';
     metadata.stack = err.stack;
     winston.error(err.message, JSON.stringify(metadata));
   }
