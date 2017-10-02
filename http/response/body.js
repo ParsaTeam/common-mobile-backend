@@ -1,4 +1,5 @@
 'use strict';
+
 // 
 // private methods
 const bodyResponseData = (data, requestId) => {
@@ -12,7 +13,7 @@ const bodyResponseError = (code, message, requestId, mobileBackendId) => {
   mobileBackendId = mobileBackendId ? `-${mobileBackendId}` : '';
   return {
     error: {
-      message: message,
+      message,
       code: `mb-${code}${mobileBackendId}`
     },
     requestId

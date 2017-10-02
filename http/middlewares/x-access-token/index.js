@@ -1,18 +1,19 @@
 'use strict';
+
 //
-// require internal modules
-const { bodyResponse, errorResponse } = require('../../response');
+// internal modules
+const { errorResponse } = require('../../response');
 const { AuthTokensModel, CustomError } = require('../../../models');
 
 //
-// methods to expose
-const accessToken = {
+// exposed
+const accessTokenMiddlewar = {
   has(req, res, next) {
-    let accessToken = req.header('x-access-token');
+    const accessToken = req.header('x-access-token');
     if (accessToken) {
       AuthTokensModel.findOne({
-          accessToken
-        })
+        accessToken
+      })
         .populate('user')
         .then(result => {
           if (result) {
@@ -35,4 +36,4 @@ const accessToken = {
 
 //
 // exposed methods
-module.exports = accessToken;
+module.exports = accessTokenMiddlewar;

@@ -12,7 +12,13 @@ const errorResponse = {
   sendAndLog(res, err, requestId) {
     res.header('Cache-Control', 'private, max-age=0, no-cache, no-store, must-revalidate');
     if (err instanceof CustomError) {
-      logger.log.errorCustonError(err, requestId);
+      const metadata = {
+        status: err.status,
+        category: err.category,
+        orinalStack: err.orinalStack,
+        requestId
+      };
+      logger.log.errorWithMetadata(err, metadata);
       switch (err.status) {
         case 400:
           res.status(400).json(body.badRequest(err.message, requestId));
@@ -39,7 +45,11 @@ const errorResponse = {
           res.status(500).json(body.internalServerError(err));
       }
     } else {
-      logger.log.error(err, 'unknown', requestId);
+      const metadata = {
+        category: 'internal-error',
+        requestId
+      };
+      logger.log.errorWithMetadata(err, metadata);
       res.status(500).json(body.internalServerError(err));
     }
   },

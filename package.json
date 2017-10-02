@@ -4,7 +4,7 @@
   "description": "Common Mobile Backend",
   "main": "./index.js",
   "scripts": {
-    "lint": "eslint *.js cache/**/*.js logger/**/*.js"
+    "lint": "eslint *.js cache/*.js cache/**/*.js http/*.js http/**/*.js logger/*.js logger/**/*.js models/*.js models/**/*.js"
   },
   "dependencies": {
     "bluebird": "^3.5.0",

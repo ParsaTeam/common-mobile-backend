@@ -1,14 +1,16 @@
 'use strict';
+
 //
 // requiere modules externals
-const mongoose = require('mongoose'),
-  Schema = mongoose.Schema,
-  encrypt = require('mongoose-encryption');
+const mongoose = require('mongoose');
+const encrypt = require('mongoose-encryption');
+
+const Schema = mongoose.Schema;
 
 //
 // environments
-const encryptionKey = process.env.MONGODB_ENCRYPTION_KEY, // SOME 32 BYTE BASE64 STRING
-  signingKey = process.env.MONGODB_SIGNING_KEY; // SOME 64 BYTE BASE64 STRING
+const encryptionKey = process.env.MONGODB_ENCRYPTION_KEY; // SOME 32 BYTE BASE64 STRING
+const signingKey = process.env.MONGODB_SIGNING_KEY; // SOME 64 BYTE BASE64 STRING
 
 //
 // user schema model

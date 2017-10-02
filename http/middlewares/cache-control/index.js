@@ -1,14 +1,15 @@
 'use strict';
+
 //
 // const default values
 const CACHE_TIME_IN_MINUTES = 60;
 
 //
-// methods to expose
-const cacheControl = {
+// exposed
+const cacheControlMiddlewar = {
   cache(cacheTimeInMinutes) {
     return (req, res, next) => {
-      let seconds = (cacheTimeInMinutes || CACHE_TIME_IN_MINUTES) * 60;
+      const seconds = (cacheTimeInMinutes || CACHE_TIME_IN_MINUTES) * 60;
       res.header('Cache-Control', `public, max-age=${seconds}`);
       next();
     };
@@ -22,6 +23,4 @@ const cacheControl = {
   }
 };
 
-//
-// exposed methods
-module.exports = cacheControl;
+module.exports = cacheControlMiddlewar;

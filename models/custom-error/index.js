@@ -1,5 +1,4 @@
 'use strict';
-const { categories } = require('../../logger');
 
 //
 // class to model "custom error" of mobile backend
