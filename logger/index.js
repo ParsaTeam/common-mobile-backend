@@ -27,8 +27,7 @@ winston.add(WinstonCloudWatch, {
   awsRegion: process.env.USER_CLOUDWACTH_AWS_REGION,
   awsOptions: {
     logStreamName: process.env.USER_CLOUDWACTH_AWS_REGION
-  },
-  jsonMessage: true
+  }
 });
 
 //
@@ -38,13 +37,13 @@ const log = {
     winston.info(message);
   },
   infoWithMetadata(message, metadata) {
-    winston.info(message, metadata);
+    winston.info(message, JSON.stringify(metadata));
   },
   warn(message) {
     winston.warn(message);
   },
   warnWithMetadata(message, metadata) {
-    winston.warn(message, metadata);
+    winston.warn(message, JSON.stringify(metadata));
   },
   error(err) {
     const message = err.message;
@@ -53,7 +52,7 @@ const log = {
   },
   errorWithMetadata(err, metadata) {
     metadata.stack = err.stack;
-    winston.error(err.message, metadata);
+    winston.error(err.message, JSON.stringify(metadata));
   }
 };
 
